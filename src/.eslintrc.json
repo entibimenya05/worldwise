@@ -1,0 +1,4 @@
+//to make our project use the eslint rules we installed,we create a new object
+{
+  "extends": "react-app"
+}
