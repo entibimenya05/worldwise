@@ -7,7 +7,7 @@ function Homepage() {
       <PageNav />
       <h1>WorldWise</h1>
       {/* <a href="/pricing">Pricing</a>*/}
-      <Link to="/pricing">Pricing</Link>
+      <Link to="/app">Go to the app</Link>
     </div>
   );
 }
