@@ -3,7 +3,7 @@ import Product from "./pages/product";
 import Pricing from "./pages/Pricing";
 import Login from "./pages/Login";
 import Homepage from "./pages/Homepage";
-
+import Form from "./component/Form";
 import AppLayout from "./pages/AppLayout";
 import PageNotFound from "./pages/PageNotFound";
 import CityList from "./component/CityList";
@@ -54,7 +54,7 @@ function App() {
             path="Countries"
             element={<CountryList cities={cities} isLoading={isLoading} />}
           />
-          <Route path="form" element={<p>Form</p>} />
+          <Route path="form" element={<Form />} />
         </Route>
         <Route path="*" element={<PageNotFound />} />
       </Routes>
