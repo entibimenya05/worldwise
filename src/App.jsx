@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Product from "./pages/product";
 import Pricing from "./pages/Pricing";
 import Login from "./pages/Login";
@@ -41,7 +41,7 @@ function App() {
           {/*index route is the default route that shows when none of the below routes is mathed*/}
           <Route
             index
-            element={<CityList cities={cities} isLoading={isLoading} />}
+            element={<Navigate replace to="cities" isLoading={isLoading} />}
           />
           {/*nested routes*/}
           <Route
