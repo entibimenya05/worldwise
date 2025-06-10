@@ -10,12 +10,19 @@ import {
 } from "react-leaflet";
 import { useState, useEffect } from "react";
 import { useCities } from "../contexts/CitiesContext";
+import { useGeolocation } from "../hooks/useGeolocation";
+import Button from "./Button";
 function Map() {
   const [mapPosition, setMapPosition] = useState([40, 0]);
   //const navigate = useNavigate();
   const { cities } = useCities();
   //in order to read the lat and lng,useSearchParams
   const [searchParams] = useSearchParams();
+  const {
+    isLoading: isLoadingPosition,
+    position: geolocationPosition,
+    getPosition,
+  } = useGeolocation();
   const mapLat = searchParams.get("lat");
   const mapLng = searchParams.get("lng");
   //we need to synchronize the above so we use an effect
@@ -25,12 +32,27 @@ function Map() {
     },
     [mapLat, mapLng]
   );
+  //syncronise the mapPosition with the geolocation
+  useEffect(
+    function () {
+      if (geolocationPosition)
+        setMapPosition([geolocationPosition.lat, geolocationPosition.lng]);
+    },
+    [geolocationPosition]
+  );
   return (
     //programatic navigation: moving to a new page without clicking on any link
     //usually moving to a Form or after submitting a form
     //attach an event handler and then our function as shown below
 
     <div className={styles.mapContainer}>
+      {/*Let's triger the getPosition by a Button*/}
+      {!geolocationPosition && (
+        <Button type="position" onClick={getPosition}>
+          {isLoadingPosition ? "loading..." : "Use your position"}
+        </Button>
+      )}
+
       <MapContainer
         center={mapPosition}
         //to implement the below, you need to create a new function: ChangeCenter
