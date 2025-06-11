@@ -52,7 +52,23 @@ function CitiesProvider({ children }) {
       //updating the cities manually to be replaced later by react query
       setCities((cities) => [...cities, data]);
     } catch {
-      alert("There was an error loading data ...");
+      alert("There was an error creating city ...");
+    } finally {
+      setIsLoading(false);
+    }
+  }
+  //deletingCity
+  async function deleteCity(id) {
+    try {
+      setIsLoading(true);
+      await fetch(`${BASE_URL}/cities/${id}`, {
+        method: "DELETE",
+      });
+
+      //updating the cities manually to be replaced later by react query
+      setCities((cities) => cities.filter((city) => city.id !== id));
+    } catch {
+      alert("There was an error deleting city ...");
     } finally {
       setIsLoading(false);
     }
@@ -60,7 +76,14 @@ function CitiesProvider({ children }) {
   //3.reading the values from the CitiesContext;the firstcurly bracelet is entering the javascript mode, the second is the object
   return (
     <CitiesContext.Provider
-      value={{ cities, isLoading, currentCity, getCity, createCity }}
+      value={{
+        cities,
+        isLoading,
+        currentCity,
+        getCity,
+        createCity,
+        deleteCity,
+      }}
     >
       {children}
     </CitiesContext.Provider>
