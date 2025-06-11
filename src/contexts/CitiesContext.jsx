@@ -36,10 +36,32 @@ function CitiesProvider({ children }) {
       setIsLoading(false);
     }
   }
-
+  //creating a new city
+  //create a function that loads the cities then call it in City.jsx
+  async function createCity(newCity) {
+    try {
+      setIsLoading(true);
+      const res = await fetch(`${BASE_URL}/cities`, {
+        method: "POST",
+        body: JSON.stringify(newCity),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      //updating the cities manually to be replaced later by react query
+      setCities((cities) => [...cities, data]);
+    } catch {
+      alert("There was an error loading data ...");
+    } finally {
+      setIsLoading(false);
+    }
+  }
   //3.reading the values from the CitiesContext;the firstcurly bracelet is entering the javascript mode, the second is the object
   return (
-    <CitiesContext.Provider value={{ cities, isLoading, currentCity, getCity }}>
+    <CitiesContext.Provider
+      value={{ cities, isLoading, currentCity, getCity, createCity }}
+    >
       {children}
     </CitiesContext.Provider>
   );
