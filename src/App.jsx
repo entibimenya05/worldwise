@@ -12,6 +12,7 @@ import CountryList from "./component/CountryList";
 import City from "./component/City";
 import { CitiesProvider } from "./contexts/CitiesContext";
 import { AuthProvider } from "./contexts/FakeAuthContext";
+import ProtectedRoute from "./pages/ProtectedRoute";
 
 function App() {
   return (
@@ -23,7 +24,15 @@ function App() {
             <Route path="product" element={<Product />} />
             <Route path="pricing" element={<Pricing />} />
             <Route path="login" element={<Login />} />
-            <Route path="app" element={<AppLayout />}>
+            <Route
+              path="app"
+              element={
+                //since the entire application is the Applayout, we can wrap it with ProtectedRoute here
+                <ProtectedRoute>
+                  <AppLayout />
+                </ProtectedRoute>
+              }
+            >
               {/*index route is the default route that shows when none of the below routes is mathed*/}
               <Route index element={<Navigate replace to="cities" />} />
               {/*nested routes*/}
